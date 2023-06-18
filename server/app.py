@@ -360,7 +360,7 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(NewUser, "/new_user")
 api.add_resource(UserCommentsById, "/comments/<int:id>")
 api.add_resource(UserComments, "/messages")
-api.add_resource(Listings, "/api2/listings")
+api.add_resource(Listings, "/listings")
 api.add_resource(ListingsById, "/listings/<int:id>")
 
 
