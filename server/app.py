@@ -364,7 +364,7 @@ api.add_resource(Listings, "/api2/listings")
 api.add_resource(ListingsById, "/listings/<int:id>")
 
 
-# if __name__ == "__main__":
-#     app.run(port=5555, debug=True)
+if __name__ == "__main__":
+    app.run(port=8000, debug=True)
 
 
