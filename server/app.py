@@ -5,7 +5,7 @@ from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from models import User, Listing, Comment
-from config import app, api, db
+from config import api, db
 import ipdb
 from flask import request
 from flask_restful import Resource
