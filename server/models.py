@@ -5,7 +5,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 
 from config import db
-from flask_bcrypt import Bcrypt
+from bcrypt import bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
