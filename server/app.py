@@ -90,28 +90,29 @@ class Login(Resource):
             current_user = User.query.filter_by(email=email).first()
 
 
-            if current_user 
-                response_data = current_user.to_dict(
-                    only=(
-                        # "id",
-                        "email",
-                        "name",
-                        # "_password_hash"
-                    )
-                )
-                response = jsonify(response_data)
-                response.status_code = 200
+            if current_user and current_user.authenticate(password):
+                # session["email"] = current_user.email
+                response = make_response(
+                    jsonify(
+                        current_user.to_dict(
+                            only=(
+                                "id",
+                                "email",
+                                "name",
+                                "_password_hash"
+
+                            )
+                        )
+                    ),
+                    200,
+                )  # Include the "username" key in the response JSON
                 return response
 
-            response_data = {"error": "Invalid username or password."}
-            response = jsonify(response_data)
-            response.status_code = 401
+            response = make_response({"error": "Invalid username or password."}, 401)
             return response
 
         except Exception as e:
-            response_data = {"error": str(e)}
-            response = jsonify(response_data)
-            response.status_code = 500
+            response = make_response({"error": str(e)}, 500)
             return response
         
         
@@ -313,9 +314,6 @@ class Listings(Resource):
                 200,
             )
         return make_response({"error": "no comments found"}, 404)
-    
-
-
 
     def post(self):
         request_json = request.get_json()
@@ -351,26 +349,6 @@ class Listings(Resource):
 
         except Exception:
             return make_response(jsonify({}), 400)
-        
-
-
-class Users(Resource):
-    def get(self):
-        all_users = User.query.all()
-
-        if all_users:
-            return make_response(
-                jsonify(
-                    [
-                        user.to_dict(
-                            only=("email", "_password_hash")
-                        )
-                        for user in all_users
-                    ]
-                ),
-                200,
-            )
-        return make_response({"error": "no comments found"}, 404)
 
 
 api.add_resource(Logout, "/logout")
@@ -382,12 +360,11 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(NewUser, "/new_user")
 api.add_resource(UserCommentsById, "/comments/<int:id>")
 api.add_resource(UserComments, "/messages")
-api.add_resource(Users, "/users")
 api.add_resource(Listings, "/listings")
 api.add_resource(ListingsById, "/listings/<int:id>")
 
 
 # if __name__ == "__main__":
-app.run(debug=True)
+    # app.run(port=8000, debug=True)
 
 
