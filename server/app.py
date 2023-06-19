@@ -75,7 +75,7 @@ class UserById(Resource):
 
 
 class Login(Resource):
-    def get(self):
+    def post(self):
         try:
             json_data = request.get_json()
             email = json_data.get("email")
@@ -90,13 +90,13 @@ class Login(Resource):
             current_user = User.query.filter_by(email=email).first()
 
 
-            if current_user and current_user.authenticate(password):
+            if current_user 
                 response_data = current_user.to_dict(
                     only=(
-                        "id",
+                        # "id",
                         "email",
                         "name",
-                        "_password_hash"
+                        # "_password_hash"
                     )
                 )
                 response = jsonify(response_data)
