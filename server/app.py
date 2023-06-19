@@ -80,7 +80,7 @@ class Login(Resource):
             json_data = request.get_json()
             email = json_data.get("email")
             password = json_data.get("password")
-            name = json_data.get("name")
+            # name = json_data.get("name")
 
 
             if not email:
@@ -91,14 +91,13 @@ class Login(Resource):
 
 
             if current_user and current_user.authenticate(password):
-                # session["email"] = current_user.email
                 response = make_response(
                     jsonify(
                         current_user.to_dict(
                             only=(
-                                "id",
+                                # "id",
                                 "email",
-                                "name",
+                                # "name",
                                 "_password_hash"
 
                             )
@@ -314,6 +313,9 @@ class Listings(Resource):
                 200,
             )
         return make_response({"error": "no comments found"}, 404)
+    
+
+
 
     def post(self):
         request_json = request.get_json()
@@ -349,6 +351,26 @@ class Listings(Resource):
 
         except Exception:
             return make_response(jsonify({}), 400)
+        
+
+
+class Users(Resource):
+    def get(self):
+        all_users = User.query.all()
+
+        if all_users:
+            return make_response(
+                jsonify(
+                    [
+                        user.to_dict(
+                            only=("email", "_password_hash")
+                        )
+                        for user in all_users
+                    ]
+                ),
+                200,
+            )
+        return make_response({"error": "no comments found"}, 404)
 
 
 api.add_resource(Logout, "/logout")
@@ -360,11 +382,12 @@ api.add_resource(UserById, "/users/<int:id>")
 api.add_resource(NewUser, "/new_user")
 api.add_resource(UserCommentsById, "/comments/<int:id>")
 api.add_resource(UserComments, "/messages")
+api.add_resource(Users, "/users")
 api.add_resource(Listings, "/listings")
 api.add_resource(ListingsById, "/listings/<int:id>")
 
 
 # if __name__ == "__main__":
-    # app.run(port=8000, debug=True)
+app.run(debug=True)
 
 

@@ -13,8 +13,8 @@ from models import db, User, Listing, Comment
 
 fake = Faker()
 
-if __name__ == "__main__":
-    fake = Faker()
+# if __name__ == "__main__":
+
 
     # Create seed data
 with app.app_context():

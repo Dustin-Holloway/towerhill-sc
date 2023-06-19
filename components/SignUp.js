@@ -14,14 +14,17 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await fetch("/api2/new_user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
+      const response = await fetch(
+        "https://towerhill-service.onrender.com/new_user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUser),
+        }
+      );
       const data = await response.json();
+      console.log(data);
     } catch (error) {}
-
     handleSignIn();
   }
 

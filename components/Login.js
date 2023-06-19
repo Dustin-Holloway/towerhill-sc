@@ -122,7 +122,7 @@ export default function Login() {
               Object.values([0]).map((provider) => (
                 <button
                   className="flex w-full mt-3 justify-center rounded-md bg-amber-400 py-1.5 "
-                  key={provider.name}
+                  key={provider.id}
                   onClick={handleSignIn}
                 >
                   Sign In with Google
