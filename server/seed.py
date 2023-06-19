@@ -7,7 +7,8 @@ from random import randint, choice as rc
 from faker import Faker
 
 # Local imports
-from app import app
+# from app import app
+from config import app
 from models import db, User, Listing, Comment
 
 fake = Faker()

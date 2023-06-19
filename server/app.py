@@ -5,7 +5,7 @@ from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from models import User, Listing, Comment
-from config import api, db
+from config import api, db, app
 # import ipdb
 from flask import request
 from flask_restful import Resource
@@ -365,6 +365,6 @@ api.add_resource(ListingsById, "/listings/<int:id>")
 
 
 # if __name__ == "__main__":
-#     app.run(port=8000, debug=True)
+    # app.run(port=8000, debug=True)
 
 

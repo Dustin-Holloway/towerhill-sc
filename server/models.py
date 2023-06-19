@@ -37,13 +37,13 @@ class User(db.Model, SerializerMixin):
     def password(self, value):
         if self._password_hash is None:
             # User signing up with a password for the first time
-            self._password_hash = Bcrypt.generate_password_hash(value.encode("utf-8"))
+            self._password_hash = bcrypt.generate_password_hash(value.encode("utf-8"))
         else:
             # Updating the password
             self.set_password(value)
 
     def set_password(self, new_password):
-        self._password_hash = Bcrypt.generate_password_hash(
+        self._password_hash = bcrypt.generate_password_hash(
             new_password.encode("utf-8")
         )
 
