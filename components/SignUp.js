@@ -23,12 +23,11 @@ export default function SignUp() {
         }
       );
       const data = await response.json();
-      console.log(data);
     } catch (error) {}
     handleSignIn();
   }
 
-  const handleSignIn = () => {
+  const handleSignIn = (e) => {
     signIn("credentials", {
       ...newUser,
       callbackUrl: "http://localhost:3000/profile",

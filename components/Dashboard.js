@@ -45,8 +45,6 @@ export default function Dashboard() {
     //   imageUrl: session.user.image,
   };
 
-  console.log(user);
-
   return (
     <>
       {/*

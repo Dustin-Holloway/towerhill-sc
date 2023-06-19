@@ -75,7 +75,7 @@ class UserById(Resource):
 
 
 class Login(Resource):
-    def post(self):
+    def get(self):
         try:
             json_data = request.get_json()
             email = json_data.get("email")
@@ -91,27 +91,27 @@ class Login(Resource):
 
 
             if current_user and current_user.authenticate(password):
-                response = make_response(
-                    jsonify(
-                        current_user.to_dict(
-                            only=(
-                                # "id",
-                                "email",
-                                # "name",
-                                "_password_hash"
-
-                            )
-                        )
-                    ),
-                    200,
-                )  # Include the "username" key in the response JSON
+                response_data = current_user.to_dict(
+                    only=(
+                        "id",
+                        "email",
+                        "name",
+                        "_password_hash"
+                    )
+                )
+                response = jsonify(response_data)
+                response.status_code = 200
                 return response
 
-            response = make_response({"error": "Invalid username or password."}, 401)
+            response_data = {"error": "Invalid username or password."}
+            response = jsonify(response_data)
+            response.status_code = 401
             return response
 
         except Exception as e:
-            response = make_response({"error": str(e)}, 500)
+            response_data = {"error": str(e)}
+            response = jsonify(response_data)
+            response.status_code = 500
             return response
         
         

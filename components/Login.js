@@ -28,15 +28,15 @@ export default function Login() {
     }); // Replace 'google' with your provider name
   };
 
-  const loginUser = async (e) => {
+  function loginUser(e) {
     e.preventDefault();
-    await signIn("credentials", {
+    signIn("credentials", {
       ...data,
       callbackUrl: "http://localhost:3000/profile",
     });
 
     // Use a colon (:) for assignment
-  };
+  }
 
   return (
     <>

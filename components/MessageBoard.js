@@ -17,7 +17,7 @@ export default function MessageBoard() {
 
 
     useEffect(() => {
-        fetch("/api2/messages")
+        fetch("https://towerhill-service.onrender.com//messages")
           .then((res) => res.json())
           .then((data) => setMessages(data)
       )}, []);
