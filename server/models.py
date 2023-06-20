@@ -48,7 +48,8 @@ class User(db.Model, SerializerMixin):
         )
 
     def authenticate(self, password):
-        return bcrypt.check_password_hash(self._password_hash, password.encode("utf-8"))
+        hashed_password = self._password_hash.encode("utf-8")
+        return bcrypt.check_password_hash(hashed_password, password.encode("utf-8"))
 
 
 class Listing(db.Model, SerializerMixin):

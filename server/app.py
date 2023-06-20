@@ -88,7 +88,7 @@ class Login(Resource):
             current_user = User.query.filter_by(email=email).first()
 
             if current_user:
-                if current_user.authenticate(password.encode("utf-8")):
+                if current_user.authenticate(password):
                     response_data = {
                         "id": current_user.id,
                         "email": current_user.email,
