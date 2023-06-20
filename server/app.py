@@ -87,22 +87,25 @@ class Login(Resource):
 
             current_user = User.query.filter_by(email=email).first()
 
-            if current_user and current_user.authenticate(password):
-                response_data = {
-                    "id": current_user.id,
-                    "email": current_user.email,
-                    "name": current_user.name,
-                }
-                response = make_response(jsonify(response_data), 200)
-                return response
+            if current_user:
+                if current_user.authenticate(password):
+                    response_data = {
+                        "id": current_user.id,
+                        "email": current_user.email,
+                        "name": current_user.name,
+                    }
+                    response = make_response(jsonify(response_data), 200)
+                    return response
+                else:
+                    response = make_response({"error": "Invalid password."}, 401)
+                    return response
 
-            response = make_response({"error": "Invalid email or password."}, 401)
+            response = make_response({"error": "User not found."}, 404)
             return response
 
         except Exception as e:
             response = make_response({"error": str(e)}, 500)
             return response
-
 
 class Logout(Resource):
     def delete(self):
