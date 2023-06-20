@@ -80,42 +80,28 @@ class Login(Resource):
             json_data = request.get_json()
             email = json_data.get("email")
             password = json_data.get("password")
-            # name = json_data.get("name")
 
-
-            if not email:
-                response = make_response({"error": "Username is required."}, 400)
+            if not email or not password:
+                response = make_response({"error": "Email and password are required."}, 400)
                 return response
 
             current_user = User.query.filter_by(email=email).first()
 
-
             if current_user and current_user.authenticate(password):
-                # session["email"] = current_user.email
-                response = make_response(
-                    jsonify(
-                        current_user.to_dict(
-                            only=(
-                                "id",
-                                "email",
-                                "name",
-                                "_password_hash"
-
-                            )
-                        )
-                    ),
-                    200,
-                )  # Include the "username" key in the response JSON
+                response_data = {
+                    "id": current_user.id,
+                    "email": current_user.email,
+                    "name": current_user.name,
+                }
+                response = make_response(jsonify(response_data), 200)
                 return response
 
-            response = make_response({"error": "Invalid username or password."}, 401)
+            response = make_response({"error": "Invalid email or password."}, 401)
             return response
 
         except Exception as e:
             response = make_response({"error": str(e)}, 500)
             return response
-        
-        
 
 
 class Logout(Resource):
